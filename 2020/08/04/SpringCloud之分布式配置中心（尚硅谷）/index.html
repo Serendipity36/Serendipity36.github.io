@@ -478,8 +478,8 @@
 <p>4.当配置发生变动时，服务不需要重启即可感知到配置的变化并应用新的配置</p>
 <p>5.将配置信息以REST接口的形式暴露</p>
 <h2 id="Config服务端配置与测试"><a href="#Config服务端配置与测试" class="headerlink" title="Config服务端配置与测试"></a>Config服务端配置与测试</h2><p>1.用自己的账号在GitHub上新建一个名为SpringCloud-Config的新Repository</p>
-<p>2.由上一步获得刚新建的git地址：<a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
-<p>3.本地硬盘目录上新建git仓库并clone：git命令 git clone <a href="mailto:&#103;&#105;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;">&#103;&#105;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
+<p>2.由上一步获得刚新建的git地址：<a href="mailto:&#103;&#105;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#103;&#105;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
+<p>3.本地硬盘目录上新建git仓库并clone：git命令 git clone <a href="mailto:&#x67;&#x69;&#x74;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#x67;&#x69;&#x74;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
 <p>4.新建Module模块cloud-config-center3344</p>
 <blockquote>
 <p>pom.xml文件：</p>
@@ -688,6 +688,12 @@ management:
 <p>curl -X POST “<a target="_blank" rel="noopener" href="http://localhost:3355/actuator/refresh&quot;">http://localhost:3355/actuator/refresh&quot;</a></p>
 </blockquote>
 <p>再测试发现生效了</p>
+<blockquote>
+<p>假如有多个微服务，每个微服务都要执行一次post请求，手动刷新吗？</p>
+<p>可否广播，一次通知，处处生效？</p>
+<p>想大范围的自动刷新</p>
+<p>见下一章SpringCloud Bus消息总线</p>
+</blockquote>
 
             </div>
             <hr/>
@@ -916,31 +922,31 @@ management:
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">
+                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SpringCloud之分布式配置中心（尚硅谷）">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SpringCloud之消息总线（尚硅谷）">
                         
-                        <span class="card-title">SpringCloud之分布式配置中心（尚硅谷）</span>
+                        <span class="card-title">SpringCloud之消息总线（尚硅谷）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            SpringCloud Config分布式配置中心SpringCloud Config概述分布式系统面临的配置问题
-微服务意味着要将单体应用中的业务拆分成一个个子服务, 每个服务的粒度相对较小，因此系统中会出现大量的服务。于每个服务都需要必
+                            SpringCloud Bus 消息总线概述什么是SpringCloud Bus 消息总线
+
+在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来。由于该主题中产生的消息会被所有实例监
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-04
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -949,7 +955,6 @@ management:
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
