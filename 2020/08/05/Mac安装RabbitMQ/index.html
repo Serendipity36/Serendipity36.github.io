@@ -458,7 +458,34 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <blockquote>
+<p>安装命令</p>
+</blockquote>
+<pre class=" language-bash"><code class="language-bash"> brew <span class="token function">install</span> rabbitmq</code></pre>
+<blockquote>
+<p>启动RabbitMQ</p>
+</blockquote>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /usr/local/Cellar/rabbitmq/3.8.3/sbin
+<span class="token function">sudo</span> ./rabbitmq-server</code></pre>
+<blockquote>
+<p>启动成功如图</p>
+</blockquote>
+<p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200805094809.png"></p>
+<blockquote>
+<p>浏览器输入<a target="_blank" rel="noopener" href="http://127.0.0.1:15672/">http://127.0.0.1:15672</a></p>
+</blockquote>
+<p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200805095114.png"></p>
+<blockquote>
+<p>用户名：guest</p>
+<p>密码：guest</p>
+<p>登陆成功如图：</p>
+</blockquote>
+<p>![image-20200805095210899](/Users/sunqs/Library/Application Support/typora-user-images/image-20200805095210899.png)</p>
+<blockquote>
+<p>关闭RabbitMQ</p>
+</blockquote>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ./rabbitmqctl stop</code></pre>
+
             </div>
             <hr/>
 
@@ -686,30 +713,33 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/">
+                <a href="/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Mac安装RabbitMQ">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Mac切换homebrew镜像源">
                         
-                        <span class="card-title">Mac安装RabbitMQ</span>
+                        <span class="card-title">Mac切换homebrew镜像源</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
+切换清华镜像源：
+
+vim ~/.bash_profile
+echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -718,7 +748,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

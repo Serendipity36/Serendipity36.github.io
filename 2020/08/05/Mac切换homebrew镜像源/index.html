@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringCloud之消息总线（尚硅谷）, java">
+    <meta name="keywords" content="Mac切换homebrew镜像源, java">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SpringCloud之消息总线（尚硅谷） | Serendipity&#39;s blogs</title>
+    <title>Mac切换homebrew镜像源 | Serendipity&#39;s blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringCloud之消息总线（尚硅谷）</h1>
+                    <h1 class="description center-align post-title">Mac切换homebrew镜像源</h1>
                 </div>
             </div>
         </div>
@@ -435,15 +435,6 @@
                 </div>
                 <div class="col s5 right-align">
                     
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/SpringCloud%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                SpringCloud学习
-                            </a>
-                        
-                    </div>
-                    
                 </div>
             </div>
 
@@ -451,7 +442,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-04
+                    2020-08-05
                 </div>
                 
 
@@ -467,13 +458,37 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="SpringCloud-Bus-消息总线"><a href="#SpringCloud-Bus-消息总线" class="headerlink" title="SpringCloud Bus 消息总线"></a>SpringCloud Bus 消息总线</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="什么是SpringCloud-Bus-消息总线"><a href="#什么是SpringCloud-Bus-消息总线" class="headerlink" title="什么是SpringCloud Bus 消息总线"></a>什么是SpringCloud Bus 消息总线</h3><p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200804165634.png"></p>
+                <blockquote>
+<p>切换清华镜像源：</p>
+</blockquote>
+<pre class=" language-bash"><code class="language-bash">vim ~/.bash_profile
+<span class="token keyword">echo</span> <span class="token string">"export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"</span> <span class="token operator">>></span> ~/.bash_profile
+<span class="token function">source</span> ~/.bash_profile <span class="token comment" spellcheck="true"># 使刚才的配置立即生效</span></code></pre>
 <blockquote>
-<p>在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来。由于该主题中产生的消息会被所有实例监听和消费，所以称它为消息总线。在总线上的各个实例，都可以方便的广播一些需要让其他连接在该主题上的实例都知道的消息。</p>
+<p>homebrew常用的命令：</p>
 </blockquote>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><blockquote>
-<p>ConfigClient 实例都监听MQ中同一个topic（默认是springcloubus），当一个服务刷新数据的时候，它会把这个信息放入到Topic中，这样其他监听统一topic的服务就能得到通知，然后去更新自身的配置。</p>
-</blockquote>
+<pre class=" language-bash"><code class="language-bash">brew -v
+brew update --verbose <span class="token comment" spellcheck="true">#观察update过程</span>
+brew info demo <span class="token comment" spellcheck="true">#查看demo包的信息</span>
+Brew tap xxx 添加源
+brew update     <span class="token comment" spellcheck="true">#更新自己的Homebrew</span>
+brew search demo <span class="token comment" spellcheck="true">#寻找包名含有demo的包</span>
+brew doctor <span class="token comment" spellcheck="true">#检查brew的运行状态</span>
+brew outdates <span class="token comment" spellcheck="true">#检查本机内已经处于旧版本的包</span>
+brew list <span class="token comment" spellcheck="true">#列出brew安装的包</span>
+brew cleanup <span class="token comment" spellcheck="true">#清理缓存</span>
+brew <span class="token function">install</span> demo <span class="token comment" spellcheck="true">#安装demo包</span>
+brew uninstall demo <span class="token comment" spellcheck="true">#卸载demo包</span>
+brew <span class="token function">link</span> demo <span class="token comment" spellcheck="true">#关联demo包</span>
+php -m <span class="token operator">|</span> <span class="token function">grep</span> phalcon  <span class="token comment" spellcheck="true">#检测扩展</span>
+brew -S phalcon   <span class="token comment" spellcheck="true">#找到对应版本的phalcon扩展</span>
+<span class="token comment" spellcheck="true">#修改homebrew镜像源:</span>
+  <span class="token comment" spellcheck="true">#国内清华大学</span>
+  <span class="token keyword">echo</span> <span class="token string">"export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"</span> <span class="token operator">>></span> ~/.bash_profile
+  <span class="token comment" spellcheck="true">#中科大源</span>
+  <span class="token keyword">echo</span> <span class="token string">'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles'</span> <span class="token operator">>></span> ~/.bash_profile
+  <span class="token comment" spellcheck="true">#立即生效</span>
+  <span class="token function">source</span> ~/.bash_profile</code></pre>
 
             </div>
             <hr/>
@@ -499,7 +514,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/</a>
+                    <a href="https://serendipity36.github.io/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/">https://serendipity36.github.io/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -702,9 +717,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Mac切换homebrew镜像源">
+                        
+                        <span class="card-title">Mac切换homebrew镜像源</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+切换清华镜像源：
+
+vim ~/.bash_profile
+echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Serendipity
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/">
                     <div class="card-image">
@@ -736,55 +794,13 @@ sudo ./rabbitmq-server
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
                             Serendipity
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SpringCloud之分布式配置中心（尚硅谷）">
-                        
-                        <span class="card-title">SpringCloud之分布式配置中心（尚硅谷）</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            SpringCloud Config分布式配置中心SpringCloud Config概述分布式系统面临的配置问题
-微服务意味着要将单体应用中的业务拆分成一个个子服务, 每个服务的粒度相对较小，因此系统中会出现大量的服务。于每个服务都需要必
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-04
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/SpringCloud%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    SpringCloud学习
-                                </a>
-                            
                             
                         </span>
                     </div>
