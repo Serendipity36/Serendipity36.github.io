@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Mac安装RabbitMQ, java">
+    <meta name="keywords" content="SpringCloud之消息总线（尚硅谷）, java">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Mac安装RabbitMQ | Serendipity&#39;s blogs</title>
+    <title>SpringCloud之消息总线（尚硅谷） | Serendipity&#39;s blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Mac安装RabbitMQ</h1>
+                    <h1 class="description center-align post-title">SpringCloud之消息总线（尚硅谷）</h1>
                 </div>
             </div>
         </div>
@@ -435,6 +435,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/SpringCloud%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                SpringCloud学习
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -442,7 +451,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-05
+                    2020-08-04
                 </div>
                 
 
@@ -458,33 +467,95 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>安装命令</p>
-</blockquote>
-<pre class=" language-bash"><code class="language-bash"> brew <span class="token function">install</span> rabbitmq</code></pre>
+                <h1 id="SpringCloud-Bus-消息总线"><a href="#SpringCloud-Bus-消息总线" class="headerlink" title="SpringCloud Bus 消息总线"></a>SpringCloud Bus 消息总线</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="什么是SpringCloud-Bus-消息总线"><a href="#什么是SpringCloud-Bus-消息总线" class="headerlink" title="什么是SpringCloud Bus 消息总线"></a>什么是SpringCloud Bus 消息总线</h3><p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200804165634.png"></p>
 <blockquote>
-<p>启动RabbitMQ</p>
+<p>在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来。由于该主题中产生的消息会被所有实例监听和消费，所以称它为消息总线。在总线上的各个实例，都可以方便的广播一些需要让其他连接在该主题上的实例都知道的消息。</p>
 </blockquote>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /usr/local/Cellar/rabbitmq/3.8.3/sbin
-<span class="token function">sudo</span> ./rabbitmq-server</code></pre>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><blockquote>
+<p>ConfigClient 实例都监听MQ中同一个topic（默认是springcloubus），当一个服务刷新数据的时候，它会把这个信息放入到Topic中，这样其他监听统一topic的服务就能得到通知，然后去更新自身的配置。</p>
+</blockquote>
+<h2 id="SpringCloud-Bus动态刷新全局广播"><a href="#SpringCloud-Bus动态刷新全局广播" class="headerlink" title="SpringCloud Bus动态刷新全局广播"></a>SpringCloud Bus动态刷新全局广播</h2><p>1.先在本机配置好RabbitMQ环境并启动</p>
+<p>2.演示广播效果，增加复杂度，以3355为模板创建Module：cloud-config-client3366</p>
+<p>3.设计思想：</p>
 <blockquote>
-<p>启动成功如图</p>
+<p>1）利用消息总线触发一个客户端/bus/refresh，而刷新所有客户端的配置。</p>
+<p>2）利用消息总线触发一个服务端ConfigServer的/bus/refresh端点，而刷新所有客户端的配置。</p>
+<p>2）的设计思想更加适合，1）不适合的理由如下</p>
+<ul>
+<li>打破了微服务的职责单一性，因为微服务本身是一个业务模块，它本不应该承担配置刷新的职责。</li>
+<li>破坏了微服务各节点的对等性。</li>
+<li>有一定的局限性。例如，微服务在迁移时，它的网络地址常常会发生变化，此时如果想要做到自动刷新，那就会增加更多的修改</li>
+</ul>
 </blockquote>
-<p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200805094809.png"></p>
+<p>4.给cloud-config-center3344配置中心服务端添加消息总线支持</p>
 <blockquote>
-<p>浏览器输入<a target="_blank" rel="noopener" href="http://127.0.0.1:15672/">http://127.0.0.1:15672</a></p>
+<p>pom文件添加</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!--添加消息总线RabbitMQ支持--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-bus-amqp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
 </blockquote>
-<p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200805095114.png"></p>
 <blockquote>
-<p>用户名：guest</p>
-<p>密码：guest</p>
-<p>登陆成功如图：</p>
+<p>修改yml文件：</p>
+<pre class=" language-yml"><code class="language-yml">server:
+  port: 3344
+
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Serendipity36/SpringCloud-Config.git #github仓库上面的git仓库名字
+          ##搜索目录
+          search-paths:
+            - SpringCloud-Config
+      #读取分支
+      label: master
+  #rabbitmq相关配置 15672是web管理界面的端口；5672是MQ访问的端口
+  rabbitmq:
+    host: localhost
+    prot: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka #注册进eureka
+
+#rabbitmq相关配置，暴露bus刷新配置的端点
+management:
+  endpoint:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'</code></pre>
 </blockquote>
-<p>![image-20200805095210899](/Users/sunqs/Library/Application Support/typora-user-images/image-20200805095210899.png)</p>
+<p>4.给cloud-config-client3355和cloud-config-client3366客户端添加消息总线支持</p>
 <blockquote>
-<p>关闭RabbitMQ</p>
+<p>pom文件添加</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!--添加消息总线RabbitMQ支持--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-bus-amqp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
 </blockquote>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> ./rabbitmqctl stop</code></pre>
+<p>5.测试</p>
+<blockquote>
+<p>修改github上版本号</p>
+<p>发送post请求：curl -X POST “<a target="_blank" rel="noopener" href="http://localhost:3344/actuator/bus-refresh&quot;">http://localhost:3344/actuator/bus-refresh&quot;</a></p>
+<p>一次发送，处处生效</p>
+</blockquote>
+<h2 id="SpringCloud-Bus动态刷新定点通知"><a href="#SpringCloud-Bus动态刷新定点通知" class="headerlink" title="SpringCloud Bus动态刷新定点通知"></a>SpringCloud Bus动态刷新定点通知</h2><blockquote>
+<p>指定某一个实例生效而不是全部</p>
+<p>公式：<a target="_blank" rel="noopener" href="http://localhost:3344/actuator/bus-refresh/%7Bdestination%7D">http://localhost:3344/actuator/bus-refresh/{destination}</a></p>
+<p>只刷新3355，不刷新3366：</p>
+<p>curl -X POST “<a target="_blank" rel="noopener" href="http://localhost:3344/actuator/bus-refresh/config-client:3355&quot;">http://localhost:3344/actuator/bus-refresh/config-client:3355&quot;</a></p>
+</blockquote>
+<p>![image-20200805133229322](/Users/sunqs/Library/Application Support/typora-user-images/image-20200805133229322.png)</p>
 
             </div>
             <hr/>
@@ -510,7 +581,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://serendipity36.github.io/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/">https://serendipity36.github.io/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/</a>
+                    <a href="https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF(%E5%B0%9A%E7%A1%85%E8%B0%B7)/">https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF(%E5%B0%9A%E7%A1%85%E8%B0%B7)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -717,23 +788,33 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/">
+                <a href="/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Mac切换homebrew镜像源">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Mac安装RabbitMQ">
                         
-                        <span class="card-title">Mac切换homebrew镜像源</span>
+                        <span class="card-title">Mac安装RabbitMQ</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-切换清华镜像源：
+安装命令
 
-vim ~/.bash_profile
-echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+ brew install rabbitmq
+
+启动RabbitMQ
+
+cd /usr/local/Cellar/rabbitmq/3.8.3/sbin
+sudo ./rabbitmq-server
+
+启动成功如图
+
+
+
+浏览
                         
                     </div>
                     <div class="publish-info">
@@ -758,21 +839,20 @@ echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebre
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF(%E5%B0%9A%E7%A1%85%E8%B0%B7)/">
+                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83(%E5%B0%9A%E7%A1%85%E8%B0%B7)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SpringCloud之消息总线（尚硅谷）">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SpringCloud之分布式配置中心（尚硅谷）">
                         
-                        <span class="card-title">SpringCloud之消息总线（尚硅谷）</span>
+                        <span class="card-title">SpringCloud之分布式配置中心（尚硅谷）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            SpringCloud Bus 消息总线概述什么是SpringCloud Bus 消息总线
-
-在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来。由于该主题中产生的消息会被所有实例监
+                            SpringCloud Config分布式配置中心SpringCloud Config概述分布式系统面临的配置问题
+微服务意味着要将单体应用中的业务拆分成一个个子服务, 每个服务的粒度相对较小，因此系统中会出现大量的服务。于每个服务都需要必
                         
                     </div>
                     <div class="publish-info">

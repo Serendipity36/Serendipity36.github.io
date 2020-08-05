@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringCloud之消息总线（尚硅谷）, java">
+    <meta name="keywords" content="SpringCloud之消息驱动(尚硅谷), java">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SpringCloud之消息总线（尚硅谷） | Serendipity&#39;s blogs</title>
+    <title>SpringCloud之消息驱动(尚硅谷) | Serendipity&#39;s blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringCloud之消息总线（尚硅谷）</h1>
+                    <h1 class="description center-align post-title">SpringCloud之消息驱动(尚硅谷)</h1>
                 </div>
             </div>
         </div>
@@ -451,7 +451,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-08-04
+                    2020-08-05
                 </div>
                 
 
@@ -467,12 +467,29 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="SpringCloud-Bus-消息总线"><a href="#SpringCloud-Bus-消息总线" class="headerlink" title="SpringCloud Bus 消息总线"></a>SpringCloud Bus 消息总线</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="什么是SpringCloud-Bus-消息总线"><a href="#什么是SpringCloud-Bus-消息总线" class="headerlink" title="什么是SpringCloud Bus 消息总线"></a>什么是SpringCloud Bus 消息总线</h3><p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200804165634.png"></p>
-<blockquote>
-<p>在微服务架构的系统中，通常会使用轻量级的消息代理来构建一个共用的消息主题，并让系统中所有微服务实例都连接上来。由于该主题中产生的消息会被所有实例监听和消费，所以称它为消息总线。在总线上的各个实例，都可以方便的广播一些需要让其他连接在该主题上的实例都知道的消息。</p>
+                <h1 id="SpringCloud-Stream-消息驱动"><a href="#SpringCloud-Stream-消息驱动" class="headerlink" title="SpringCloud Stream 消息驱动"></a>SpringCloud Stream 消息驱动</h1><h2 id="消息驱动概述"><a href="#消息驱动概述" class="headerlink" title="消息驱动概述"></a>消息驱动概述</h2><blockquote>
+<p>屏蔽底层消息中间件差异，降低切换成本，统一消息的编程模型</p>
 </blockquote>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><blockquote>
-<p>ConfigClient 实例都监听MQ中同一个topic（默认是springcloubus），当一个服务刷新数据的时候，它会把这个信息放入到Topic中，这样其他监听统一topic的服务就能得到通知，然后去更新自身的配置。</p>
+<h3 id="什么是SpringCloudStream"><a href="#什么是SpringCloudStream" class="headerlink" title="什么是SpringCloudStream"></a>什么是SpringCloudStream</h3><blockquote>
+<p>官方定义SpringCloud Stream是一个构建消息驱动微服务的框架。</p>
+<p>应用程序通过inputs和outputs来与SpringCloudStream中的binder对象交互。</p>
+<p>通过我们配置来binding(绑定)，而SpringCloud Stream的binder对象负责与消息中间件交互。</p>
+</blockquote>
+<h3 id="设计思想"><a href="#设计思想" class="headerlink" title="设计思想"></a>设计思想</h3><blockquote>
+<p>在没有绑定器这个概念的情况下，我们的SpringBoot应用要直接与消息中间件进行信息交互的时候，由于各消息中间件构建的初衷不同，他们的实现细节上会有较大的差异性。</p>
+<p>通过定义绑定器作为中间层，完美地实现了应用程序与消息中间件之间的隔离。</p>
+<p>通过向应用程序暴露统一的Channal通道，使得应用程序不需要再考虑各种不同的消息中间件实现。</p>
+</blockquote>
+<blockquote>
+<p>通过定义绑定器Binder作为中间层，实现了应用程序与消息中间件细节之间的隔离。</p>
+</blockquote>
+<h3 id="编码API和常用注解"><a href="#编码API和常用注解" class="headerlink" title="编码API和常用注解"></a>编码API和常用注解</h3><p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200805150850.png"></p>
+<h2 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h2><p>1.RabbitMQ环境准备</p>
+<p>2.工程中新建三个子模块</p>
+<blockquote>
+<p>Cloud-stream-rabbitmq-provider8801作为生产者进行发消息模块</p>
+<p>cloud-stream-rabbitmq-consumer8802作为消息接收模块</p>
+<p>cloud-stream-rabbitmq-consumer8803作为消息接收模块</p>
 </blockquote>
 
             </div>
@@ -499,7 +516,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">https://serendipity36.github.io/2020/08/04/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BF%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/</a>
+                    <a href="https://serendipity36.github.io/2020/08/05/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8-%E5%B0%9A%E7%A1%85%E8%B0%B7/">https://serendipity36.github.io/2020/08/05/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8-%E5%B0%9A%E7%A1%85%E8%B0%B7/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -702,51 +719,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/08/05/Mac%E5%AE%89%E8%A3%85RabbitMQ/">
+                <a href="/2020/08/05/SpringCloud%E4%B9%8B%E6%B6%88%E6%81%AF%E9%A9%B1%E5%8A%A8-%E5%B0%9A%E7%A1%85%E8%B0%B7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Mac安装RabbitMQ">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="SpringCloud之消息驱动(尚硅谷)">
                         
-                        <span class="card-title">Mac安装RabbitMQ</span>
+                        <span class="card-title">SpringCloud之消息驱动(尚硅谷)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-安装命令
+                            SpringCloud Stream 消息驱动消息驱动概述
+屏蔽底层消息中间件差异，降低切换成本，统一消息的编程模型
 
- brew install rabbitmq
+什么是SpringCloudStream
+官方定义SpringCloud Stream是一个构建消息驱动微服务的框架。
 
-启动RabbitMQ
-
-cd /usr/local/Cellar/rabbitmq/3.8.3/sbin
-sudo ./rabbitmq-server
-
-启动成功如图
-
-
-
-浏览
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Serendipity
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringCloud%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    SpringCloud学习
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -757,34 +771,33 @@ sudo ./rabbitmq-server
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/08/04/SpringCloud%E4%B9%8B%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%EF%BC%88%E5%B0%9A%E7%A1%85%E8%B0%B7%EF%BC%89/">
+                <a href="/2020/08/05/Mac%E5%88%87%E6%8D%A2homebrew%E9%95%9C%E5%83%8F%E6%BA%90/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="SpringCloud之分布式配置中心（尚硅谷）">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Mac切换homebrew镜像源">
                         
-                        <span class="card-title">SpringCloud之分布式配置中心（尚硅谷）</span>
+                        <span class="card-title">Mac切换homebrew镜像源</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            SpringCloud Config分布式配置中心SpringCloud Config概述分布式系统面临的配置问题
-微服务意味着要将单体应用中的业务拆分成一个个子服务, 每个服务的粒度相对较小，因此系统中会出现大量的服务。于每个服务都需要必
+                            
+切换清华镜像源：
+
+vim ~/.bash_profile
+echo "export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-05
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/SpringCloud%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    SpringCloud学习
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Serendipity
                             
                         </span>
                     </div>
