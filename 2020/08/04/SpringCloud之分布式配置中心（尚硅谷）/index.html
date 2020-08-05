@@ -461,8 +461,7 @@
                 <h1 id="SpringCloud-Config分布式配置中心"><a href="#SpringCloud-Config分布式配置中心" class="headerlink" title="SpringCloud Config分布式配置中心"></a>SpringCloud Config分布式配置中心</h1><h2 id="SpringCloud-Config概述"><a href="#SpringCloud-Config概述" class="headerlink" title="SpringCloud Config概述"></a>SpringCloud Config概述</h2><h3 id="分布式系统面临的配置问题"><a href="#分布式系统面临的配置问题" class="headerlink" title="分布式系统面临的配置问题"></a>分布式系统面临的配置问题</h3><blockquote>
 <p>微服务意味着要将单体应用中的业务拆分成一个个子服务, 每个服务的粒度相对较小，因此系统中会出现大量的服务。于每个服务都需要必要的配置信息才能运行，所以一套集中式的、动态的配置管理设施是必不可少的。</p>
 </blockquote>
-<p>###SpringCloud Config简述</p>
-<p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200804143107.png"></p>
+<h3 id="SpringCloud-Config简述"><a href="#SpringCloud-Config简述" class="headerlink" title="SpringCloud Config简述"></a>SpringCloud Config简述</h3><p><img src="https://gitee.com/serendipity24/SerendipityPic/raw/master/img/20200804143107.png"></p>
 <blockquote>
 <p>SpringCloud Config为微服务架构中的微服务提供集中化的外部配置支持,配置服务器为各个不同微服务应用的所有环境提供了一个中心化的外部配置。</p>
 </blockquote>
@@ -471,15 +470,14 @@
 <p>服务端也称为分布式配置中心，他是一个独立的微服务应用，用来连接配置服务器并为客户端提供获取配置信息，加密/解密信息等访问接口。</p>
 <p>客户端则是通过指定的配置中心来管理应用资源，以及与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息，配置服务器默认采用git来存储配置信息，这样有助于对环境配置进行版本管理，并且可以通过git客户端工具来方便的管理和访问配置内容。</p>
 </blockquote>
-<p>###SpringCloud Config作用</p>
-<p>1.集中管理配置文件</p>
+<h3 id="SpringCloud-Config作用"><a href="#SpringCloud-Config作用" class="headerlink" title="SpringCloud Config作用"></a>SpringCloud Config作用</h3><p>1.集中管理配置文件</p>
 <p>2.不同环境不同配置，动态化的配置更新，分环境部署比如dev/test/prod/beta/release</p>
 <p>3.运行期间动态调整配置，不再需要在每个服务部署的机器上编写配置文件,服务会向配置中心统一一拉取配置自己的信息</p>
 <p>4.当配置发生变动时，服务不需要重启即可感知到配置的变化并应用新的配置</p>
 <p>5.将配置信息以REST接口的形式暴露</p>
 <h2 id="Config服务端配置与测试"><a href="#Config服务端配置与测试" class="headerlink" title="Config服务端配置与测试"></a>Config服务端配置与测试</h2><p>1.用自己的账号在GitHub上新建一个名为SpringCloud-Config的新Repository</p>
-<p>2.由上一步获得刚新建的git地址：<a href="mailto:&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#46;&#x63;&#x6f;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
-<p>3.本地硬盘目录上新建git仓库并clone：git命令 git clone <a href="mailto:&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;">&#103;&#105;&#116;&#64;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;</a>:Serendipity36/SpringCloud-Config.git</p>
+<p>2.由上一步获得刚新建的git地址：<a href="mailto:&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#99;&#111;&#109;">&#103;&#105;&#x74;&#x40;&#x67;&#x69;&#116;&#x68;&#117;&#x62;&#x2e;&#99;&#111;&#109;</a>:Serendipity36/SpringCloud-Config.git</p>
+<p>3.本地硬盘目录上新建git仓库并clone：git命令 git clone <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a>:Serendipity36/SpringCloud-Config.git</p>
 <p>4.新建Module模块cloud-config-center3344</p>
 <blockquote>
 <p>pom.xml文件：</p>
